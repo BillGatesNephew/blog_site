@@ -8,8 +8,6 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -32,6 +30,30 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+#########################
+##  Custom Added Gems  ##
+#########################
+# Devise Gem for User Authentication
+gem 'devise'
+
+# JQuery Gem
+gem 'jquery-rails'
+
+# Bootstrap 4.0 Gem
+gem 'bootstrap', '~> 4.0.0'
+
+# Popper Gem needed for Bootstrap
+gem 'popper_js', '~> 1.12.9'
+
+# Material UI Styles for Bootstrap
+gem 'material-sass', '~> 4.0.0.beta2'
+
+# Use Postgres as database
+group :production, :development do 
+  gem 'pg'
+end  
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

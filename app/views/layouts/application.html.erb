@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BlogSite</title>
+    <title>The Bit Banging Blog</title>
     <%= csrf_meta_tags %>
+    <!-- Material UI Meta Tags -->
+    <meta charset="utf-8">
+    <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "layouts/navbar" %>
+    <div class="container-fluid application-container">
+      <%= yield %>
+      <br />
+    </div>
   </body>
 </html>

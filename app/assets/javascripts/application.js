@@ -12,4 +12,13 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+//
+//  Bootstrap and Material-UI Dependencies
+// ------------------------------------------
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
+//= require material
+//
+//  Imports Individual JS Files
+// ------------------------------
