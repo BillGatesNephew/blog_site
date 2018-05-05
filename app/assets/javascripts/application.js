@@ -20,5 +20,5 @@
 //= require bootstrap-sprockets
 //= require material
 //
-//  Imports Individual JS Files
-// ------------------------------
+//  Imports Individual JS Files On Every Page
+// ---------------------------------------------
