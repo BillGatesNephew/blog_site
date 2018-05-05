@@ -4,17 +4,16 @@
   <div class="col-xs-12 col-sm-10 offset-sm-1">
     <div class="jumbotron" id="postJumbotron">
       <h1 class="display-4"><%= @post.title %></h1>
-      <p class="lead">
-        A brief summary for this dude
-      </p>
+      <p class="font-weight-light">Written by <%= @post.author_name %></p>
+      <p class="lead"><%= @post.summary %></p>
       <hr class="my-4">
         <p><%= @post.content %></p>
-      <hr class="my-4">
         <button type="button" class="btn btn-primary">Related Posts</button>
+      <% if @post.author == current_author %>
+        <hr class="my-4">
+        <%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-info'  %>
+        <%= link_to 'Delete Post', @post, method: :delete, class: 'btn btn-danger'  %>
+      <% end %>
     </div>
   </div>
 </div>
-
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>

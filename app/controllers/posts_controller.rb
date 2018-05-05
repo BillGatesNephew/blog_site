@@ -1,5 +1,16 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_author!, only: [:new, :edit, :create, :update]
+
+  # GET /posts/author/walker
+  def author_posts
+    @author = Author.where('lower(name) = ?', params["author_name"].downcase).first
+    if @author 
+      @posts = @author.posts
+    else 
+      redirect_to :root
+    end 
+  end 
 
   # GET /posts
   # GET /posts.json
@@ -24,6 +35,7 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
+
     @post = Post.new(post_params)
 
     respond_to do |format|
@@ -69,6 +81,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:content, :title)
+      params.require(:post).permit(:content, :title, :summary).merge(author_id: current_author.id)
     end
 end

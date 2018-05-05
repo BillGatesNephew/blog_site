@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top navbar-expand-lg application-navbar justify-content-between">
     
-    <a class='navbar-brand' href="#">The Bit Banging Blog</a>
+    <%= link_to 'The Bit Banging Blog', :root, class: 'navbar-brand'  %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,16 +9,23 @@
       
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class='nav-link' href="#">All Posts</a>
+          <%= link_to 'All Posts', :root, class: 'nav-link'  %>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Posts By Writer
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class='dropdown-item' href="#">Aman Ibrahim</a>
-            <a class="dropdown-item" href="#">Simran Singh</a>
-            <a class="dropdown-item" href="#">Walker Willetts</a>
+            <% Author.all.each do |author| %>
+              <%= link_to '/author/' + author.name, class: 'dropdown-item' do %>
+                <%= author.name %> &nbsp;
+                <span class="badge  badge-info">
+                  <%= author.posts.size %>
+                  <%= author.posts.size == 1 ? " post" : " posts"%>
+                </span>
+              <% end %>
+              
+            <% end %>
           </div>
         </li>
 
@@ -32,11 +39,31 @@
             <a class="dropdown-item" href="#">Something Else</a>
           </div>
         </li>
-        
+        <% if author_signed_in? %>
+          <li class="nav-item">
+            <%= link_to 'Create Post', :new_post, method: :get, class: 'btn btn-success' %>       
+
+
+          </li>
+        <% end %>
       </ul>
 
       <div>
-        <a class="btn btn-info">Author Login</a>
+        <% if author_signed_in? %>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hey, <%= current_author.name %>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Your Posts</a>
+              <a class="dropdown-item" href="#">Your Profile</a>
+              <div class="dropdown-divider"></div>
+              <%= link_to 'Logout', :destroy_author_session, method: :delete, class: 'dropdown-item' %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to 'Author Login', :new_author_session, method: :get, class: 'btn btn-info' %>       
+        <% end %>
       </div>
     </div>
 </nav>
