@@ -16,7 +16,10 @@ $(document).ready(function() {
     function addTagToDropdown(tagName) {
         const $tagLink = createElement("a", tagName, "dropdown-item");
         $tagLink.onclick = () => {
-            if(!rowTags.includes(tagName)) addTagToRow(tagName);
+            if(!rowTags.includes(tagName)) {
+                addTagToRow(tagName);
+                dropdownTags = dropdownTags.filter(item => item !== tagName);
+            }
         };
         $dropdown.appendChild($tagLink);
         dropdownTags.push(tagName);

@@ -14,7 +14,8 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 offset-sm-1">
     <div class="jumbotron" id="postJumbotron">
-      
+      <h2>Create a New Post</h2>
+      <hr>
       <div class="form-group">
         <%= form.label :title %>
         <%= form.text_field :title, id: :post_title, class: 'form-control', placeholder: 'Your post\'s title' %>
@@ -37,8 +38,6 @@
           <span class="dropdown-menu" id="dropdownMenu"></span>
         </div>
         <div class="col-xs-12 col-sm-8">
-          <h4 class="text-center">Current Tags</h4> 
-          <hr>
           <div id="tags"></div>
         </div>
       </div>
