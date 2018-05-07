@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   
   get '/tag/:tag_name', to: 'posts#tag_posts'
   post '/tag/new', to: 'tags#new', as: :new_tag
+  put '/tags/:id', to: 'tags#update'
+  delete '/tags/:id', to: 'tags#delete'
 
   root to: "posts#index"
 

@@ -1,8 +1,7 @@
 (function() {
-    let successMessage = "Tag successfully created.";
-    let errorMessage = "Tag not created - Please fix the following:";
     let errors = <%= raw @errors %>;
-    let $modalBody = document.getElementById("modalBody");
+    let $tagCard = document.getElementById("<%= raw @tag_id %>");
+    let errorMessage = "Tag not updated - Please fix the following:";
 
     function removeExistingAlert() {
         $existingAlert = document.getElementById("tagAlert");
@@ -34,16 +33,11 @@
         return $button;
     }
 
-    function tagCreated() {
-        const $successAlert = createAlert(successMessage, "alert-success");
-        $modalBody.prepend($successAlert);
-    }
-
-    function tagNotCreated(errors) {
+    function tagNotUpdated(errors) {
         const $errorList = createAlertErrorList(errors);
         const $errorAlert = createAlert(errorMessage, "alert-danger");
         $errorAlert.appendChild($errorList);
-        $modalBody.prepend($errorAlert);
+        $tagCard.prepend($errorAlert);
     }
 
     function createAlertErrorList(errors) {
@@ -57,5 +51,5 @@
         return $errorList;
     }
 
-    errors.length === 0 ? tagCreated() : tagNotCreated(errors);
+    tagNotUpdated(errors);
 })();

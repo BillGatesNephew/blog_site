@@ -40,11 +40,11 @@ gem 'devise'
 # JQuery Gem
 gem 'jquery-rails'
 
-# Bootstrap 4.0 Gem
-gem 'bootstrap', '~> 4.0.0'
-
 # Popper Gem needed for Bootstrap
 gem 'popper_js', '~> 1.12.9'
+
+# Bootstrap 4.0 Gem
+gem 'bootstrap', '~> 4.0.0'
 
 # Material UI Styles for Bootstrap
 gem 'material-sass', '~> 4.0.0.beta2'

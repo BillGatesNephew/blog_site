@@ -38,10 +38,19 @@ class PostsController < ApplicationController
     @post = Post.new
     @initial_tags = Array.new
     Tag.all.each {|tag| @initial_tags << tag.name }
+    @current_tags = Array.new
   end
 
   # GET /posts/1/edit
   def edit
+    if @post.author == current_author 
+      @initial_tags = Array.new
+      Tag.all.each {|tag| @initial_tags << tag.name }
+      @current_tags = Array.new
+      Posttag.tags_for_post(@post).each {|tag| @current_tags << tag.name }
+    else
+      redirect_to :root 
+    end 
   end
 
   # POST /posts
@@ -64,8 +73,10 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
+    tags = params["post_tags"].split(',')
     respond_to do |format|
       if @post.update(post_params)
+        Posttag.add_tags_to_post(@post, tags)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else

@@ -8,7 +8,9 @@
       <p class="lead"><%= @post.summary %></p>
       <hr class="my-4">
         <p><%= @post.content %></p>
-        <button type="button" class="btn btn-primary">Related Posts</button>
+        <% @post.tags.each do |tag| %>
+          <%= link_to tag.name, '/tag/' + tag.name, class: 'btn btn-primary'  %>
+        <% end %>
       <% if @post.author == current_author %>
         <hr class="my-4">
         <%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-info'  %>

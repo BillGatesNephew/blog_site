@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def set_current_tags 
-    @tags = Tag.all
+    @tags = Tag.all.sort_by{ |tag| tag.name.downcase }
   end 
   
 end

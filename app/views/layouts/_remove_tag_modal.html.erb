@@ -2,7 +2,11 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div id="modalBody" class="modal-body">
-        <%= render "layouts/edit_tags_accordion", { tags: @tags }%>
+        <% if @tags.count == 0 %>
+          <h2 class="text-center">No Tags Available</h2>
+        <% else %>
+          <%= render "layouts/edit_tags_accordion", { tags: @tags }%>
+        <% end %>
       </div>
     </div>
   </div>

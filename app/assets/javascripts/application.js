@@ -11,12 +11,12 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require popper
 //= require turbolinks
 //
 //  Bootstrap and Material-UI Dependencies
 // ------------------------------------------
 //= require jquery3
-//= require popper
 //= require bootstrap-sprockets
 //= require material
 //

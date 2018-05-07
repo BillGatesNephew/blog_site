@@ -57,6 +57,6 @@ $(document).ready(function() {
     }
 
     initialTags.forEach(addTagToDropdown);
-
+    currentTags.forEach(addTagToRow);
     
 });
