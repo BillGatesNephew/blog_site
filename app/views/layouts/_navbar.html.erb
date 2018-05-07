@@ -47,9 +47,7 @@
         </li>
         <% if author_signed_in? %>
           <li class="nav-item">
-            <%= link_to 'Create Post', :new_post, method: :get, class: 'btn btn-success' %>       
-
-
+            <%= link_to 'Create Post', :new_post, method: :get, class: 'btn btn-success' %>      
           </li>
         <% end %>
       </ul>
@@ -61,8 +59,14 @@
               Hey, <%= current_author.name %>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Your Posts</a>
+              <%= link_to '/author/' + current_author.name, class: 'dropdown-item' do %>
+                Your Posts
+              <% end %>
               <a class="dropdown-item" href="#">Your Profile</a>
+              <% if !current_page?(:new_post) %>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item edit-tags" data-toggle="modal" data-target="#editTagModal">Edit Tags</a>
+              <% end %>
               <div class="dropdown-divider"></div>
               <%= link_to 'Logout', :destroy_author_session, method: :delete, class: 'dropdown-item' %>
             </div>
@@ -73,3 +77,7 @@
       </div>
     </div>
 </nav>
+
+<% if !current_page?(:new_post) %>
+  <%= render "layouts/remove_tag_modal" %>
+<% end %>

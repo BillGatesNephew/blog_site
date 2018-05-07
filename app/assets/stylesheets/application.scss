@@ -33,6 +33,14 @@ body {
     background-color: $app-background;
 }
 
+.edit-tags {
+    color: black !important;
+}
+
+.edit-tags:hover {
+    cursor: pointer;
+}
+
 .tag-badge {
     font-size: 1.4em;
     margin-top: 4px;

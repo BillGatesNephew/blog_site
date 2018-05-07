@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tag<%= number %>">
+            <h5><%= tag.name %></h5>
+        </button>
+    </div>
+
+    <div id="tag<%= number %>" class="collapse <% if number == 0 %> show<% end %>" data-parent="#tagAccordion">
+        <div class="card-body">
+            <%= form_for tag, url: :new_tag, remote: true do |f| %>
+                <div class="form-group">
+                    <%= f.label :name %>
+                    <%= f.text_field :name, id: :tag_name, class: 'form-control', placeholder: 'The tag\'s name'%>
+                </div>
+
+                <div class="form-group">
+                    <%= f.label 'Description' %>
+                    <%= f.text_field :desc, id: :tag_desc, class: 'form-control', placeholder: 'A little description for what the tag represents' %>
+                </div>
+                <hr>
+                <%= f.submit 'Update Tag', class: 'btn btn-info'%>
+                <button class="btn btn-danger">Delete</button>
+                
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<div class="accordion" id="tagAccordion">
+    <% tags.each_with_index do |tag, index|%>
+        <%= render "layouts/edit_tag_card", {tag: tag, number:index } %>
+    <% end %>
+</div>
