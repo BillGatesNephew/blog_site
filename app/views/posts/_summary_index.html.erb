@@ -1,16 +1,11 @@
 <div class="col-xs-12 col-sm-3">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Post Listings</h5>
-        <hr>
-        <p class="card-text">
-          <ul>
-            <% posts.each do |post| %>
-              <li><%= post.title %></li>
-            <% end %>
-          </ul>
-        </p>
-      </div>
-    </div>
+    <nav id="scrollspy-navbar" class="navbar navbar-light bg-light">
+      <a class="navbar-brand">Post Listings</a>
+      <nav class="nav nav-pills flex-column">
+        <% posts.each do |post| %>
+          <a class="nav-link" href="#card<%= post.id %>"><%= post.title %></a>
+        <% end %>
+      </nav>
+    </nav>
     <br>
   </div>
