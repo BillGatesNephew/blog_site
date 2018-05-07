@@ -1,9 +1,1 @@
-<h2 class="text-center">Posts</h2>
-
-<% @posts.each do |post| %>
-  <div class="row">
-    <div class="col-xs-12 col-sm-10 offset-sm-1">
-      <%= render "summary", { post: post } %>
-    </div>
-  </div>
-<% end %>
+<%= render "post_listings", { posts: @posts, title: "All Posts" } %>

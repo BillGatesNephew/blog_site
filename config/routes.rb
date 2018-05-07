@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get '/author/:author_name', to: 'posts#author_posts'
+  
+  get '/tag/:tag_name', to: 'posts#tag_posts'
+  post '/tag/new', to: 'tags#new', as: :new_tag
+
   root to: "posts#index"
 
 end

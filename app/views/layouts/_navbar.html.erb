@@ -19,7 +19,7 @@
             <% Author.all.each do |author| %>
               <%= link_to '/author/' + author.name, class: 'dropdown-item' do %>
                 <%= author.name %> &nbsp;
-                <span class="badge  badge-info">
+                <span class="badge badge-info">
                   <%= author.posts.size %>
                   <%= author.posts.size == 1 ? " post" : " posts"%>
                 </span>
@@ -34,9 +34,15 @@
             Posts By Topic
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class='dropdown-item' href="#">Complexity Theory</a>
-            <a class="dropdown-item" href="#">Clean Code</a>
-            <a class="dropdown-item" href="#">Something Else</a>
+            <% Tag.all.each do |tag| %>
+              <%= link_to '/tag/' + tag.name, class: 'dropdown-item' do %>
+                <%= tag.name %> &nbsp;
+                <span class="badge badge-info">
+                  <%= tag.posts.size %>
+                  <%= tag.posts.size == 1 ? " post" : " posts"%>
+                </span>
+              <% end %>  
+            <% end %>
           </div>
         </li>
         <% if author_signed_in? %>

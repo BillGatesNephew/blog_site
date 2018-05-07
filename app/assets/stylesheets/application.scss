@@ -37,11 +37,22 @@ body {
     font-size: 1.4em;
     margin-top: 4px;
     margin-right: 7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .remove-tag {
     font-size: 15px;
     color: $text-white !important;
+    cursor: pointer;
     padding-right: 0.4em;
     padding-left: 0.4em;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.remove-tag:hover {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12));
 }

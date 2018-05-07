@@ -1,0 +1,62 @@
+(function() {
+    let successMessage = "Tag successfully created.";
+    let errorMessage = "Tag not created - Please fix the following:";
+    let errors = <%= raw @errors %>;
+    let $modalBody = document.getElementById("modalBody");
+
+    function removeExistingAlert() {
+        $existingAlert = document.getElementById("tagAlert");
+        if($existingAlert !== null) $existingAlert.remove();
+    }
+
+    function createAlert(text, alertClass) {
+        removeExistingAlert();
+        const $alert = document.createElement("div");
+        $alert.setAttribute("class", "alert alert-dismissible fade show " + alertClass);
+        $alert.setAttribute("id", "tagAlert");
+        const $textStrong = document.createElement("strong"); 
+        const $text = document.createTextNode(text);
+        $textStrong.appendChild($text);
+        $alert.appendChild($textStrong);
+        const $dismissBtn = createAlertDismissBtn();
+        $alert.appendChild($dismissBtn);
+        return $alert;
+    }
+
+    function createAlertDismissBtn() {
+        const $button = document.createElement("button");
+        $button.setAttribute("class", "close")
+        $button.setAttribute("data-dismiss", "alert");
+        const $span = document.createElement("span");
+        const $text = document.createTextNode("x");
+        $span.appendChild($text);
+        $button.appendChild($span);
+        return $button;
+    }
+
+    function tagCreated() {
+        const $successAlert = createAlert(successMessage, "alert-success");
+        $modalBody.prepend($successAlert);
+    }
+
+    function tagNotCreated(errors) {
+        const $errorList = createAlertErrorList(errors);
+        const $errorAlert = createAlert(errorMessage, "alert-danger");
+        $errorAlert.appendChild($errorList);
+        $modalBody.prepend($errorAlert);
+    }
+
+    function createAlertErrorList(errors) {
+        const $errorList = document.createElement("ul");
+        console.log(errors);
+        errors.forEach(error => {
+            const $error = document.createElement("li");
+            const $text = document.createTextNode(error);
+            $error.appendChild($text);
+            $errorList.appendChild($error);
+        });
+        return $errorList;
+    }
+
+    errors.length === 0 ? tagCreated() : tagNotCreated(errors);
+})();

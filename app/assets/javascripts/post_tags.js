@@ -1,9 +1,6 @@
 $(document).ready(function() {
-    const initialTags = [
-        "Complexity Theory", "Clean Code", "Turing Analysis", "Digital Design", "System Architecture"
-    ];
     const badgeColors = [
-        "badge-primary", "badge-secondary", "badge-info", "badge-success", "badge-dark", "badge-light"
+        "badge-primary", "badge-info", "badge-success", "badge-dark", "badge-light"
     ];
     const $tagDiv = document.getElementById("tags");
     const $dropdown = document.getElementById("dropdownMenu");
@@ -19,9 +16,10 @@ $(document).ready(function() {
             if(!rowTags.includes(tagName)) {
                 addTagToRow(tagName);
                 dropdownTags = dropdownTags.filter(item => item !== tagName);
+                updateTagInputValue();
             }
         };
-        $dropdown.appendChild($tagLink);
+        $dropdown.prepend($tagLink);
         dropdownTags.push(tagName);
     }
 
@@ -30,11 +28,11 @@ $(document).ready(function() {
         const $newTag = createElement("span", tagName + " \u00A0", classString);
         $newTag.setAttribute("id", tagName);
         const $tagDelete = createElement("a", "X", "badge badge-pill badge-danger remove-tag");
-        $tagDelete.setAttribute("href", "");
         $tagDelete.onclick = () => {
             const $tag = document.getElementById(tagName);
             rowTags = rowTags.filter(item => item !== tagName);
             $tag.remove();
+            updateTagInputValue();
         }
         $newTag.appendChild($tagDelete);
         $tagDiv.appendChild($newTag);
@@ -50,9 +48,15 @@ $(document).ready(function() {
         return $element;
     }   
 
+    function updateTagInputValue() {
+        document.getElementById("post_tags").value = rowTags;
+    }
+
     $tagInput.onkeypress = function(event) {
         const inputString = $tagInput.value + event.key;
     }
 
     initialTags.forEach(addTagToDropdown);
+
+    
 });

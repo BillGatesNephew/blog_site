@@ -35,7 +35,10 @@
         <div class="col-xs-12 col-sm-4 dropdown">
           <label for="tagInput">Post Tags</label>
           <input id="tagInput" type="text" class="form-control" placeholder="Tag Name" data-toggle="dropdown">
-          <span class="dropdown-menu" id="dropdownMenu"></span>
+          <span class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" data-toggle="modal" data-target="#createNewTagModal">Create new tag...</a>
+          </span>
         </div>
         <div class="col-xs-12 col-sm-8">
           <div id="tags"></div>
@@ -46,8 +49,14 @@
         <%= form.submit class: 'btn btn-info'%>
       </div>
 
+      <%= hidden_field_tag :post_tags,"", name: "post_tags" %>
     </div>
   </div>
 </div>  
 <% end %>
+
+<%= render 'new_tag_modal' %>
+<script>
+  const initialTags = <%= raw @initial_tags %>;
+</script>
 <%= javascript_include_tag 'post_tags' %>

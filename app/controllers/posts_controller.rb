@@ -2,7 +2,17 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_author!, only: [:new, :edit, :create, :update]
 
-  # GET /posts/author/walker
+  # GET /tag/complexity_theory
+  def tag_posts
+    @tag = Tag.where('lower(name) = ?', params["tag_name"].downcase).first
+    if @tag
+      @posts = @tag.posts
+    else 
+      redirect_to :root
+    end 
+  end 
+
+  # GET /author/walker
   def author_posts
     @author = Author.where('lower(name) = ?', params["author_name"].downcase).first
     if @author 
@@ -26,6 +36,8 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @initial_tags = Array.new
+    Tag.all.each {|tag| @initial_tags << tag.name }
   end
 
   # GET /posts/1/edit
@@ -35,11 +47,11 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-
+    tags = params["post_tags"].split(',')
     @post = Post.new(post_params)
-
     respond_to do |format|
       if @post.save
+        Posttag.add_tags_to_post(@post, tags)
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -81,6 +93,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:content, :title, :summary).merge(author_id: current_author.id)
+      params.require(:post).permit(:content, :title, :summary, :post_tags).merge(author_id: current_author.id)
     end
 end
