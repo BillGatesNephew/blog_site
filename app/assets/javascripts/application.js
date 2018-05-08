@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require popper
 //= require turbolinks
+//= require trix
 //
 //  Bootstrap and Material-UI Dependencies
 // ------------------------------------------
@@ -22,3 +23,4 @@
 //
 //  Imports Individual JS Files On Every Page
 // ---------------------------------------------
+//

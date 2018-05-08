@@ -58,5 +58,14 @@ $(document).ready(function() {
 
     initialTags.forEach(addTagToDropdown);
     currentTags.forEach(addTagToRow);
+
+
+    document.addEventListener("trix-change", function(event) {
+        let editorContent = $("trix-editor").first()[0].value;
+        editorContent = editorContent.replace(/&lt;/g, "<");
+        editorContent = editorContent.replace(/&gt;/g, ">");
+        document.getElementById("contentPreview").innerHTML = "";
+        document.getElementById("contentPreview").innerHTML = editorContent;
+    });
     
 });

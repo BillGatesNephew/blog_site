@@ -49,6 +49,12 @@ gem 'bootstrap', '~> 4.0.0'
 # Material UI Styles for Bootstrap
 gem 'material-sass', '~> 4.0.0.beta2'
 
+# Trix Rich Text Editor
+gem 'trix'
+
+# HTMLEntities for decoding HTML for posts
+gem 'htmlentities'
+
 # Use Postgres as database
 group :production, :development do 
   gem 'pg'

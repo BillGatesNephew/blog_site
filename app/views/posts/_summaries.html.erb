@@ -6,7 +6,7 @@
           tags_for_post = post.tags.map {|tag| tag.name }.join(", ")
         end 
       %>
-      <div class="card" id="card<%= post.id %>">
+      <div class="card glowing-border" id="card<%= post.id %>">
         <div class="card-body" >
           <h5 class="card-title" ><%= post.title %></h5>
           <h6 class="card-subtitle mb-2 text-muted">Written by <%= post.author_name %> on <%= post.created_at.strftime("%A %B %e, %Y") %></h6>

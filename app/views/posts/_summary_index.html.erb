@@ -1,8 +1,8 @@
-<div class="col-xs-12 col-sm-3">
+<div class="col-12 col-sm-3">
   <div class="jumbotron jumbotron-fluid post-listing-jumbotron sticky-top">
     <div class="container">
       <h3>Post Listings</h3>
-      <ul class="list-group">
+      <ul class="list-group list-group-flush">
         <% posts.each do |post| %>
           <a class="list-group-item list-group-item-action" data-target="card<%= post.id %>"><%= post.title %></a>
         <% end %>

@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require trix
  */
 
 // Material-UI Styles for Bootstrap
@@ -58,16 +59,23 @@ body {
     padding-top:15px;
 }
 
-.footer .container {
-    padding-left: -20px !important;
-    padding-right: 0px !important;
-    margin-left: 15px !important;
-    margin-right: -10px !important;
+.glowing-border {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.glowing-border:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+.selected-border {
+    box-shadow: 0 3px 15px rgba(35,95,156,0.8) !important;
 }
 
 .post-listing-jumbotron {
     padding-top: 20px !important;
     padding-bottom: 35px !important;
+    margin-bottom: 20px;
     position: sticky;
     z-index: 0;
     top: 70px;
@@ -75,6 +83,12 @@ body {
 
 .post-listing-jumbotron a {
     cursor: pointer;
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .post-listings-main-row {
+        margin-top: 30px;
+
+    }
 }
 
 .tag-badge {

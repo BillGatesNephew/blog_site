@@ -1,24 +1,22 @@
 <% if posts.count != 0 %>
-  <div class="row">
+  <div class="row post-listings-main-row">
     <%= render "summary_index", { posts: posts }%>
     <%= render "summaries", { posts: posts }%>
   </div>
+  <br>
+  <br>
 <% else %>
   <h2 class="text-center">Sorry no posts available :(</h2>
 <% end %>
 
-
-
 <footer class="footer">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-6 col-sm-6">
         <h3 class="text-left"><%= title %></h3>
-        <br>
       </div>
-      <div class="col-sm-6">
+      <div class="col-6 col-sm-6">
         <h3 class="text-right"><%= posts.count == 1 ? posts.count.to_s + ' Post' : posts.count.to_s + ' Posts' %></h3>
-        <br>
       </div>
     </div>
   </div>
@@ -29,11 +27,16 @@
   $(document).ready(function() {
     $(".list-group-item-action").each(function() {
       this.onclick = function() {
-        const $postSummary = $("#" + this.dataset.target);
+        
         $('.list-group-item-action.active').first().removeClass("active");
         this.classList.add("active");
+
+        const $postSummary = $("#" + this.dataset.target);
+        $('.card.selected-border').first().removeClass("selected-border");
+        $postSummary.addClass("selected-border");
+
         $('html, body').animate({
-          scrollTop: $postSummary.offset().top - 60
+          scrollTop: $postSummary.offset().top - 70
         }, 1000);
       }  
     });
