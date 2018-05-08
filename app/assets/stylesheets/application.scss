@@ -16,7 +16,7 @@
 @import "material";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
-$duke-blue: #0736A4;
+$duke-blue: #235F9C;
 $app-background: #E5E5E5;
 $text-white: #fff;
 
@@ -46,6 +46,37 @@ body {
     padding-bottom: 0 !important;
 }
 
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60px;
+    background-color: $duke-blue;
+    color: $text-white;
+    padding-top:15px;
+}
+
+.footer .container {
+    padding-left: -20px !important;
+    padding-right: 0px !important;
+    margin-left: 15px !important;
+    margin-right: -10px !important;
+}
+
+.post-listing-jumbotron {
+    padding-top: 20px !important;
+    padding-bottom: 35px !important;
+    position: sticky;
+    z-index: 0;
+    top: 70px;
+}
+
+.post-listing-jumbotron a {
+    cursor: pointer;
+}
+
 .tag-badge {
     font-size: 1.4em;
     margin-top: 4px;
@@ -68,4 +99,9 @@ body {
 
 .remove-tag:hover {
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12));
+}
+
+.summary-tags-link {
+    color: #9c27b0 !important;
+    cursor: pointer;
 }
