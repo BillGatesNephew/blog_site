@@ -62,7 +62,10 @@
               <%= link_to '/author/' + current_author.name, class: 'dropdown-item' do %>
                 Your Posts
               <% end %>
-              <a class="dropdown-item" href="#">Your Profile</a>
+              <%= link_to 'Edit Your Profile', :edit_author_registration, class: 'dropdown-item' %>
+              <% if current_author != nil && current_author.id == 1 %>
+                <%= link_to 'Create New Author', :new_author_registration, class: 'dropdown-item' %>
+              <% end %>
               <% if !current_page?(:new_post) %>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item edit-tags" data-toggle="modal" data-target="#editTagModal">Edit Tags</a>

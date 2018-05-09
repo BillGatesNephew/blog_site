@@ -79,11 +79,14 @@ body {
     position: sticky;
     z-index: 0;
     top: 70px;
+    overflow-y: scroll;
+    height: 84vh !important;
 }
 
 .post-listing-jumbotron a {
     cursor: pointer;
 }
+
 @media (min-width: 992px) and (max-width: 1200px) {
     .post-listings-main-row {
         margin-top: 30px;
