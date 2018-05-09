@@ -2,11 +2,19 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_author!, only: [:new, :edit, :create, :update]
 
+  # GET /sort_posts/
+  def sort_posts
+    session[:sorting_method] = sort_param["method"]
+    redirect_back fallback_location: :root
+  end 
+
+
   # GET /tag/complexity_theory
   def tag_posts
     @tag = Tag.where('lower(name) = ?', params["tag_name"].downcase).first
     if @tag
       @posts = @tag.posts
+      sort_posts_by_method(session[:sorting_method])
     else 
       redirect_to :root
     end 
@@ -17,6 +25,7 @@ class PostsController < ApplicationController
     @author = Author.where('lower(name) = ?', params["author_name"].downcase).first
     if @author 
       @posts = @author.posts
+      sort_posts_by_method(session[:sorting_method])
     else 
       redirect_to :root
     end 
@@ -26,6 +35,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
+    sort_posts_by_method(session[:sorting_method])
   end
 
   # GET /posts/1
@@ -97,10 +107,29 @@ class PostsController < ApplicationController
   end
 
   private
+
+    def sort_posts_by_method(method)
+      if method == "Date Posted"
+        @posts = @posts.sort_by { |post| post.created_at }
+      elsif method == "Length"
+        @posts = @posts.sort_by { |post| post.content.length }
+      elsif method == "Number of Tags"
+        @posts = @posts.sort_by { |post| post.tags.count }
+      else 
+        @posts = @posts.sort_by { |post| post.title }
+      end 
+      if method == nil 
+        session[:sorting_method] = "Title"
+      end 
+    end 
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
     end
+
+    def sort_param
+      params.require(:sorting_method).permit(:method)
+    end 
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params

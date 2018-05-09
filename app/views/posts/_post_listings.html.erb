@@ -25,10 +25,12 @@
 
 <script>
   $(document).ready(function() {
+
+    /* Setup Scrollspy for Post Summary Page */
     $(".list-group-item-action").each(function() {
       this.onclick = function() {
-        
-        $('.list-group-item-action.active').first().removeClass("active");
+        const $activeLi = $('.list-group-item-action.active').first();
+        if($activeLi !== null) $activeLi.removeClass("active");
         this.classList.add("active");
 
         const $postSummary = $("#" + this.dataset.target);
@@ -40,6 +42,5 @@
         }, 1000);
       }  
     });
-    $(".list-group-item-action").first().addClass("active");
   });
 </script>

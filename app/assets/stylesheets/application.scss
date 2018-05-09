@@ -82,6 +82,11 @@ body {
     overflow-y: scroll;
     height: 84vh !important;
 }
+ 
+.post-listing-jumbotron::-webkit-scrollbar {
+    display: none;
+   }
+    
 
 .post-listing-jumbotron a {
     cursor: pointer;

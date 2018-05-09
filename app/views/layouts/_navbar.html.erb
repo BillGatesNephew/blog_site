@@ -17,14 +17,15 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <% Author.all.each do |author| %>
-              <%= link_to '/author/' + author.name, class: 'dropdown-item' do %>
-                <%= author.name %> &nbsp;
-                <span class="badge badge-info">
-                  <%= author.posts.size %>
-                  <%= author.posts.size == 1 ? " post" : " posts"%>
-                </span>
+              <% if author.posts.count != 0 %>
+                <%= link_to '/author/' + author.name, class: 'dropdown-item' do %>
+                  <%= author.name %> &nbsp;
+                  <span class="badge badge-info">
+                    <%= author.posts.size %>
+                    <%= author.posts.size == 1 ? " post" : " posts"%>
+                  </span>
+                <% end %>
               <% end %>
-              
             <% end %>
           </div>
         </li>
@@ -68,7 +69,7 @@
               <% end %>
               <% if !current_page?(:new_post) %>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item edit-tags" data-toggle="modal" data-target="#editTagModal">Edit Tags</a>
+                <a class="dropdown-item edit-tags" data-toggle="modal" data-target="#editTagModal">Edit Post Tags</a>
               <% end %>
               <div class="dropdown-divider"></div>
               <%= link_to 'Logout', :destroy_author_session, method: :delete, class: 'dropdown-item' %>

@@ -1,7 +1,21 @@
 <div class="col-12 col-sm-3">
   <div class="jumbotron jumbotron-fluid post-listing-jumbotron sticky-top">
     <div class="container">
-      <h3>Post Listing</h3>
+      <h3><strong>Post List</strong></h3>
+      <label for="sortingSelect">Sort the posts by</label>
+
+      <%= form_for('sorting_method', url: :sort_posts) do |f| %>
+        <%= f.select :method, {}, {}, { class: 'form-control', onchange: 'this.form.submit();' } do %>
+          <% sorting_options = [
+              "Title",
+              "Date Posted",
+              "Length",
+              "Number of Tags"
+          ] %>
+          <%= options_for_select(sorting_options, selected: session[:sorting_method]) %>
+        <% end %>
+      <% end %>
+      <br>
       <ul class="list-group list-group-flush">
         <% posts.each do |post| %>
           <a class="list-group-item list-group-item-action" data-target="card<%= post.id %>"><%= post.title %></a>
