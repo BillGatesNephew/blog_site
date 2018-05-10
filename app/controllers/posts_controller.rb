@@ -48,18 +48,15 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @initial_tags = Array.new
-    Tag.all.each {|tag| @initial_tags << tag.name }
-    @current_tags = Array.new
+    @initial_tags = Tag.all.map {|tag| tag.name }
+    @current_tags = []
   end
 
   # GET /posts/1/edit
   def edit
     if @post.author == current_author 
-      @initial_tags = Array.new
-      Tag.all.each {|tag| @initial_tags << tag.name }
-      @current_tags = Array.new
-      Posttag.tags_for_post(@post).each {|tag| @current_tags << tag.name }
+      @initial_tags = Tag.all.map {|tag| tag.name }
+      @current_tags = Posttag.tags_for_post(@post).map {|tag| tag.name }
     else
       redirect_to :root 
     end 
@@ -109,47 +106,32 @@ class PostsController < ApplicationController
   end
 
   private
-
+    # All methods used for sorting the posts 
     def sorting_methods
       return {
         'Title' => {
-          'A to Z' => Proc.new do |posts| 
-            posts.sort_by { |post| post.title.downcase }
-          end, 
-          'Z to A' => Proc.new do |posts| 
-            posts.sort_by { |post| post.title.downcase }.reverse
-          end
+          'A to Z' => Proc.new { |posts| posts.sort_by { |post| post.title.downcase } }, 
+          'Z to A' => Proc.new { |posts| posts.sort_by { |post| post.title.downcase }.reverse }
         },
 
         'Date Posted' => {
-          'Most Recent First' => Proc.new do |posts| 
-            posts.sort_by { |post| post.created_at }.reverse
-          end,
-          'Oldest First' => Proc.new do |posts| 
-            posts.sort_by { |post| post.created_at }
-          end 
+          'Most Recent First' => Proc.new { |posts| posts.sort_by { |post| post.created_at }.reverse },
+          'Oldest First' => Proc.new { |posts| posts.sort_by { |post| post.created_at } }
         },
 
         'Length' => {
-          'Longest First' => Proc.new do |posts| 
-            posts.sort_by { |post| post.content.length }.reverse
-          end,
-          'Shortest First' => Proc.new do |posts| 
-            posts.sort_by { |post| post.content.length }
-          end 
+          'Longest First' => Proc.new { |posts| posts.sort_by { |post| post.content.length }.reverse },
+          'Shortest First' => Proc.new { |posts| posts.sort_by { |post| post.content.length } }
         },
 
         'Number of Tags' => {
-          'Most Tags First' => Proc.new do |posts| 
-            posts.sort_by { |post| post.tags.count }.reverse
-          end, 
-          'Least Tags First' => Proc.new do |posts| 
-            posts.sort_by { |post| post.tags.count }
-          end 
+          'Most Tags First' => Proc.new { |posts| posts.sort_by { |post| post.tags.count }.reverse }, 
+          'Least Tags First' => Proc.new { |posts| posts.sort_by { |post| post.tags.count } } 
         }
       }
     end 
 
+    # The names of the option groups allowed for sorting
     def set_sorting_method_names
       @sorting_method_names = {}
       methods = sorting_methods
@@ -158,6 +140,7 @@ class PostsController < ApplicationController
       end 
     end   
 
+    # Sorts the posts using the appropriate method
     def sort_posts_by_method(method)
       if method == nil 
         session[:sorting_method] = 'A to Z'
@@ -165,9 +148,7 @@ class PostsController < ApplicationController
       end 
 
       sorting_methods.each_value do |method_hash|
-        if method_hash.has_key?(method)
-          @posts = method_hash[method].call(@posts)
-        end 
+        @posts = method_hash.has_key?(method) ? method_hash[method].call(@posts) : @posts
       end 
     end 
     
@@ -176,6 +157,7 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
 
+    # White list the parameters used for sorting
     def sort_param
       params.require(:sorting_method).permit(:method)
     end 

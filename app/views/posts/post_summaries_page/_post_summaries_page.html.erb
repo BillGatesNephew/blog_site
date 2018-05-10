@@ -1,0 +1,12 @@
+<% if posts.count != 0 %>
+  <div class="row post-listings-main-row">
+    <%= render "posts/post_summaries_page/post_listing", { posts: posts }%>
+    <%= render "posts/post_summaries_page/post_card_summaries", { posts: posts }%>
+  </div>
+  <br>
+  <br>
+  <%= render "posts/post_summaries_page/summaries_footer", { post_number: posts.count, title: title }%>
+  <%= javascript_include_tag 'post_summaries_page' %>
+<% else %>
+  <h2 class="text-center">Sorry no posts available :(</h2>
+<% end %>

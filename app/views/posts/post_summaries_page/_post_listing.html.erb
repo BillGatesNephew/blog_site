@@ -3,7 +3,6 @@
     <div class="container">
       <h3><strong>Post List</strong></h3>
       <label for="sortingSelect">Sort the posts by</label>
-
       <%= form_for('sorting_method', url: :sort_posts) do |f| %>
         <%= f.select :method, {}, {}, { class: 'form-control', onchange: 'this.form.submit();' } do %>
           <%= grouped_options_for_select(@sorting_method_names, selected: session[:sorting_method]) %>
