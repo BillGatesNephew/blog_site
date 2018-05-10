@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
+  before_action :set_sorting_method_names
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_author!, only: [:new, :edit, :create, :update]
 
+  
   # GET /sort_posts/
   def sort_posts
     session[:sorting_method] = sort_param["method"]
@@ -108,20 +110,67 @@ class PostsController < ApplicationController
 
   private
 
-    def sort_posts_by_method(method)
-      if method == "Date Posted"
-        @posts = @posts.sort_by { |post| post.created_at }
-      elsif method == "Length"
-        @posts = @posts.sort_by { |post| post.content.length }
-      elsif method == "Number of Tags"
-        @posts = @posts.sort_by { |post| post.tags.count }
-      else 
-        @posts = @posts.sort_by { |post| post.title }
+    def sorting_methods
+      return {
+        'Title' => {
+          'A to Z' => Proc.new do |posts| 
+            posts.sort_by { |post| post.title.downcase }
+          end, 
+          'Z to A' => Proc.new do |posts| 
+            posts.sort_by { |post| post.title.downcase }.reverse
+          end
+        },
+
+        'Date Posted' => {
+          'Most Recent First' => Proc.new do |posts| 
+            posts.sort_by { |post| post.created_at }.reverse
+          end,
+          'Oldest First' => Proc.new do |posts| 
+            posts.sort_by { |post| post.created_at }
+          end 
+        },
+
+        'Length' => {
+          'Longest First' => Proc.new do |posts| 
+            posts.sort_by { |post| post.content.length }.reverse
+          end,
+          'Shortest First' => Proc.new do |posts| 
+            posts.sort_by { |post| post.content.length }
+          end 
+        },
+
+        'Number of Tags' => {
+          'Most Tags First' => Proc.new do |posts| 
+            posts.sort_by { |post| post.tags.count }.reverse
+          end, 
+          'Least Tags First' => Proc.new do |posts| 
+            posts.sort_by { |post| post.tags.count }
+          end 
+        }
+      }
+    end 
+
+    def set_sorting_method_names
+      @sorting_method_names = {}
+      methods = sorting_methods
+      methods.keys.each do |method|
+        @sorting_method_names[method] = methods[method].keys 
       end 
+    end   
+
+    def sort_posts_by_method(method)
       if method == nil 
-        session[:sorting_method] = "Title"
+        session[:sorting_method] = 'A to Z'
+        method = session[:sorting_method]
+      end 
+
+      sorting_methods.each_value do |method_hash|
+        if method_hash.has_key?(method)
+          @posts = method_hash[method].call(@posts)
+        end 
       end 
     end 
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])

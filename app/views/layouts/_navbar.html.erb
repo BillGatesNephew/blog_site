@@ -57,7 +57,7 @@
         <% if author_signed_in? %>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Hey, <%= current_author.name %>
+              <%= current_author.name %>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <%= link_to '/author/' + current_author.name, class: 'dropdown-item' do %>

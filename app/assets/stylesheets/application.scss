@@ -34,6 +34,10 @@ body {
     background-color: $app-background;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 .edit-tags {
     color: black !important;
 }
@@ -57,6 +61,12 @@ body {
     background-color: $duke-blue;
     color: $text-white;
     padding-top:15px;
+}
+
+@media (max-width: 570px) {
+    .footer {
+        height: 100px;
+    }
 }
 
 .glowing-border {
@@ -85,7 +95,7 @@ body {
  
 .post-listing-jumbotron::-webkit-scrollbar {
     display: none;
-   }
+}
     
 
 .post-listing-jumbotron a {
