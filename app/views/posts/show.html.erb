@@ -9,6 +9,10 @@
   post_contents = "<p>#{ contents }</p>".html_safe
   hr_tag = '<hr class="my-4">'.html_safe
   
+  # Ruby Generated HTML
+  tag_link = Proc.new do |tag|
+    link_to(tag.name, '/tag/' + tag.name, class:'btn btn-primary')
+  end 
 %>
 
 <div class="row">
@@ -21,7 +25,7 @@
       <%= post_contents %>
 
       <% @post.tags.each do |tag| %>
-        <%= link_to tag.name, '/tag/' + tag.name, class: 'btn btn-primary'  %>
+        <%= tag_link.call(tag) %>
       <% end %>
       <% if @post.author == current_author %>
         <%= (@post.tags.count == 0 ? "" : hr_tag) %>
