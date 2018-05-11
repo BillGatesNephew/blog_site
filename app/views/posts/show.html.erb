@@ -23,6 +23,8 @@
       <%= hr_tag %>
       <%= post_contents %>
 
+      <br>
+
       <% @post.tags.each do |tag| %>
         <%= tag_link.call(tag) %>
       <% end %>
