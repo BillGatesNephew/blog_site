@@ -56,7 +56,7 @@ class PostsController < ApplicationController
   def edit
     if @post.author == current_author 
       @initial_tags = Tag.all.map {|tag| tag.name }
-      @current_tags = Posttag.tags_for_post(@post).map {|tag| tag.name }
+      @current_tags = @post.tags.map {|tag| tag.name }
     else
       redirect_to :root 
     end 
@@ -106,7 +106,7 @@ class PostsController < ApplicationController
   end
 
   private
-    # All methods used for sorting the posts 
+    # All methods used for sorting the posts when they are shown
     def sorting_methods
       return {
         'Title' => {
@@ -131,22 +131,21 @@ class PostsController < ApplicationController
       }
     end 
 
-    # The names of the option groups allowed for sorting
+    # The names of the <option> groups allowed for sorting posts
     def set_sorting_method_names
       @sorting_method_names = {}
-      methods = sorting_methods
-      methods.keys.each do |method|
-        @sorting_method_names[method] = methods[method].keys 
-      end 
+      sorting_method_groups = sorting_methods
+      sorting_method_groups.keys.each { |method_group| @sorting_method_names[method_group] = sorting_method_groups[method_group].keys }
     end   
 
     # Sorts the posts using the appropriate method
     def sort_posts_by_method(method)
+      # Default to sorting lexigraphically
       if method == nil 
         session[:sorting_method] = 'A to Z'
         method = session[:sorting_method]
       end 
-
+      # Sort posts using the appropriate procedure
       sorting_methods.each_value do |method_hash|
         @posts = method_hash.has_key?(method) ? method_hash[method].call(@posts) : @posts
       end 

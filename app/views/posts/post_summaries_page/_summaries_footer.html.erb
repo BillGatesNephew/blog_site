@@ -1,12 +1,23 @@
+<%
+  formatted_post_text = post_number == 1 ? post_number.to_s + ' Post' : post_number.to_s + ' Posts'
+  
+  # HTML Entities
+  current_page = 
+    "<div class=\"col-12 col-sm-6\">
+      <h3 class=\"text-center\">#{title}</h3>
+    </div>".html_safe
+  number_of_posts = 
+    "<div class=\"col-12 col-sm-6\">
+      <h3 class=\"text-center\">#{formatted_post_text}</h3>
+    </div>".html_safe
+  
+%>
+
 <footer class="footer">
   <div class="container">
     <div class="row">
-      <div class="col-12 col-sm-6">
-        <h3 class="text-center"><%= title %></h3>
-      </div>
-      <div class="col-12 col-sm-6">
-        <h3 class="text-center"><%= post_number == 1 ? post_number.to_s + ' Post' : post_number.to_s + ' Posts' %></h3>
-      </div>
+      <%= current_page %>
+      <%= number_of_posts %>
     </div>
   </div>
 </footer>

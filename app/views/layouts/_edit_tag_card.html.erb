@@ -1,13 +1,29 @@
-<div class="card">
-    <div class="card-header edit-tag-card-header">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tag<%= tag.id %>">
-            <h5><%= tag.name %></h5>
+<%
+    # HTML Entities
+    card_header = 
+    "<div class=\"card-header edit-tag-card-header\">
+        <button class=\"btn btn-link\" type=\"button\" data-toggle=\"collapse\" data-target=\"#tag#{tag.id}\">
+            <h5>#{tag.name}</h5>
         </button>
-    </div>
+    </div>".html_safe
+
+    confirm_delete_alert = link_to(
+        'Delete', '/tags/' + tag.id.to_s, 
+        class: 'btn btn-danger', 
+        data: { 
+            method: 'delete', 
+            confirm: 'Deleting this tag will remove it from every post that is tagged with it. Are you sure you still want to delete it?' 
+        }
+    )
+%>
+<div class="card">
+    
+    <%= card_header %>
 
     <div id="tag<%= tag.id %>" class="collapse <% if tag.id == 0 %> show<% end %>" data-parent="#tagAccordion">
         <div class="card-body">
             <%= form_for tag, url: '/tags/' + tag.id.to_s, method: :put, remote: true do |f| %>
+
                 <div class="form-group">
                     <%= f.label :name %>
                     <%= f.text_field :name, id: :tag_name, class: 'form-control', placeholder: 'The tag\'s name'%>
@@ -17,9 +33,13 @@
                     <%= f.label 'Description' %>
                     <%= f.text_field :desc, id: :tag_desc, class: 'form-control', placeholder: 'A little description for what the tag represents' %>
                 </div>
+
                 <hr>
+
                 <%= f.submit 'Update Tag', class: 'btn btn-info'%>
-                <%= link_to 'Delete', '/tags/' + tag.id.to_s, class: 'btn btn-danger', data: { method: 'delete', confirm: 'Deleting this tag will remove it from every post that is tagged with it. Are you sure you still want to delete it?' } %>
+
+                <%= confirm_delete_alert %>
+
             <% end %>
         </div>
     </div>

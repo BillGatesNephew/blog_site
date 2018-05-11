@@ -64,9 +64,7 @@ body::-webkit-scrollbar {
 }
 
 @media (max-width: 570px) {
-    .footer {
-        height: 100px;
-    }
+    .footer { height: 100px; }
 }
 
 .glowing-border {
@@ -103,10 +101,7 @@ body::-webkit-scrollbar {
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-    .post-listings-main-row {
-        margin-top: 30px;
-
-    }
+    .post-listings-main-row { margin-top: 30px; }
 }
 
 .tag-badge {

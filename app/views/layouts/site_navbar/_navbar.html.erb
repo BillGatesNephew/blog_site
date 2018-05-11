@@ -1,0 +1,41 @@
+<%
+  # HTML Entities
+  navbar_toggle_button = '
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>'.html_safe
+  author_login = link_to('Author Login', :new_author_session, method: :get, class: 'btn btn-info')
+%>
+
+<nav class="navbar fixed-top navbar-expand-lg application-navbar justify-content-between">
+    <% # The Navbar's Brand %>
+    <%= link_to 'The Bit Banging Blog', :root, class: 'navbar-brand'  %>
+    
+    <%= navbar_toggle_button %>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <% # Link to every post on blog %>
+        <li class="nav-item">
+          <%= link_to 'All Posts', :root, class: 'nav-link'  %>
+        </li>
+
+        <% # Link to every author's posts on the blog %>
+        <%= render 'layouts/site_navbar/posts_by_writer_dropdown' %>
+
+        <% # Link to posts for every Tag on the blog %>
+        <%= render 'layouts/site_navbar/posts_by_tag_dropdown' %>
+
+      </ul>
+
+      <div>
+        <% # Either Login link or links for author %>
+        <%= author_signed_in? ? render('layouts/site_navbar/author_links_dropdown') : author_login %>
+      </div>
+
+    </div>
+</nav>
+    
+<% # Don't allow tag removal when creating new posts or updating old ones %>
+<%= @can_remove_tags ? render("layouts/remove_tag_modal") : "" %>

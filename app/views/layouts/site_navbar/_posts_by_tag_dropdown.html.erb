@@ -1,0 +1,16 @@
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Posts By Topic
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <% Tag.all.each do |tag| %>
+      <%= link_to '/tag/' + tag.name, class: 'dropdown-item' do %>
+        <%= tag.name %> &nbsp;
+        <span class="badge badge-info">
+          <%= tag.posts.size %>
+          <%= tag.posts.size == 1 ? " post" : " posts"%>
+        </span>
+      <% end %>  
+    <% end %>
+  </div>
+</li>

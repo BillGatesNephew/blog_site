@@ -1,0 +1,41 @@
+<%
+    can_create_authors = (current_author != nil && current_author.id == 1)
+    # Ruby Generated HTML
+    author_creation_link = link_to('Create New Author', :new_author_registration, class: 'dropdown-item')
+    # HTML Entities
+    dropdown_button = "
+    <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+        #{current_author.name}
+    </button>".html_safe
+    dropdown_divider = '<div class="dropdown-divider"></div>'.html_safe
+    edit_tags_modal_link = '<a class="dropdown-item edit-tags" data-toggle="modal" data-target="#editTagModal">Edit Post Tags</a>'.html_safe
+%>
+
+<div class="dropdown">    
+    <%= dropdown_button %>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        
+        <% # Link to post creation %>
+        <%= link_to 'Create Post', :new_post, method: :get, class: 'btn btn-outline-success btn-block' %>      
+
+        <%= dropdown_divider %>
+
+        <% # Link to author's posts %>
+        <%= link_to 'Your Posts', '/author/' + current_author.name, class: 'dropdown-item' %>
+
+        <% # Link to editing author information %>
+        <%= link_to 'Edit Your Profile', :edit_author_registration, class: 'dropdown-item' %>
+
+        <% # Link to creating new authors %>
+        <%= can_create_authors ? author_creation_link : '' %>
+            
+        <% if @can_remove_tags %>
+            <%= dropdown_divider %>
+            <%= edit_tags_modal_link %>
+        <% end %>
+        
+        <%= dropdown_divider %>
+        
+        <%= link_to 'Logout', :destroy_author_session, method: :delete, class: 'dropdown-item' %>
+    </div>
+</div>

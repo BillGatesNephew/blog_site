@@ -1,3 +1,7 @@
+<% 
+  # HTML Entitites
+  no_posts_message = '<h2 class="text-center">Sorry no posts available :(</h2>'.html_safe
+%>
 <% if posts.count != 0 %>
   <div class="row post-listings-main-row">
     <%= render "posts/post_summaries_page/post_listing", { posts: posts }%>
@@ -8,5 +12,5 @@
   <%= render "posts/post_summaries_page/summaries_footer", { post_number: posts.count, title: title }%>
   <%= javascript_include_tag 'post_summaries_page' %>
 <% else %>
-  <h2 class="text-center">Sorry no posts available :(</h2>
+  <%= no_posts_message %>
 <% end %>

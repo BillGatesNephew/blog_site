@@ -1,12 +1,42 @@
+<%
+  # HTML Entities
+  title_header = "<h2>#{ title }</h2>".html_safe
+  post_preview_container = '
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <h5 class="card-header">Post Preview</h5>
+          <div class="card-body">
+            <div id="contentPreview">The post will appear here...</div>
+          </div>
+        </div>
+      </div>
+    </div>'.html_safe
+  post_tag_input = '
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 dropdown">
+        <label for="tagInput">Post Tags</label>
+        <input id="tagInput" type="text" class="form-control" placeholder="Tag Name" data-toggle="dropdown">
+        <span class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" data-toggle="modal" data-target="#createNewTagModal">Create new tag...</a>
+        </span>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <div id="tags"></div>
+      </div>
+    </div>'.html_safe
+%>
+
 <%= form_with(model: post, local: true) do |form| %>
+
   <% if post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
-      <% post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -14,8 +44,11 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 offset-sm-1">
     <div class="jumbotron" id="postJumbotron">
-      <h2><%= title %></h2>
+      
+      <%= title_header %>
+      
       <hr>
+
       <div class="form-group">
         <%= form.label :title %>
         <%= form.text_field :title, id: :post_title, class: 'form-control', placeholder: 'Your post\'s title' %>
@@ -32,35 +65,15 @@
         <%= form.trix_editor :content, id: :post_content, placeholder: 'Write your post\'s stuff here' %>
       </div>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="card">
-            <h5 class="card-header">Post Preview</h5>
-            <div class="card-body">
-              <div id="contentPreview">The post will appear here...</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= post_preview_container %>
+      
       <br>
 
-      <div class="row">
-        <div class="col-xs-12 col-sm-4 dropdown">
-          <label for="tagInput">Post Tags</label>
-          <input id="tagInput" type="text" class="form-control" placeholder="Tag Name" data-toggle="dropdown">
-          <span class="dropdown-menu" id="dropdownMenu">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" data-toggle="modal" data-target="#createNewTagModal">Create new tag...</a>
-          </span>
-        </div>
-        <div class="col-xs-12 col-sm-8">
-          <div id="tags"></div>
-        </div>
-      </div>
+      <%= post_tag_input %>
+
       <hr>
-      <div>
-        <%= form.submit class: 'btn btn-info'%>
-      </div>
+
+      <%= form.submit class: 'btn btn-info'%>
 
       <%= hidden_field_tag :post_tags,"", name: "post_tags" %>
     </div>
@@ -74,4 +87,5 @@
   const initialTags = <%= raw @initial_tags %>;
   const currentTags = <%= raw @current_tags %>;
 </script>
+
 <%= javascript_include_tag 'post_tags' %>

@@ -1,16 +1,30 @@
+<%
+  creation_time = @post.created_at.strftime("%A %B %e, %Y")
+  author = @post.author.name 
+  contents = HTMLEntities.new.decode(@post.content).html_safe
+  # HTML Entities
+  post_title = "<h1 class=\"display-4\">#{@post.title}</h1>".html_safe
+  post_details = "<p class=\"font-weight-light\">Written by #{author} on #{creation_time}</p>".html_safe
+  post_summary = "<p class=\"lead\">#{@post.summary}</p>".html_safe
+  post_contents = "<p>#{ contents }</p>".html_safe
+  hr_tag = '<hr class="my-4">'.html_safe
+  
+%>
+
 <div class="row">
   <div class="col-xs-12 col-sm-10 offset-sm-1">
     <div class="jumbotron" id="postJumbotron">
-      <h1 class="display-4"><%= @post.title %></h1>
-      <p class="font-weight-light">Written by <%= @post.author_name %> on <%= @post.created_at.strftime("%A %B %e, %Y") %></p>
-      <p class="lead"><%= @post.summary %></p>
-      <hr class="my-4">
-        <p><%= HTMLEntities.new.decode(@post.content).html_safe %></p>
-        <% @post.tags.each do |tag| %>
-          <%= link_to tag.name, '/tag/' + tag.name, class: 'btn btn-primary'  %>
-        <% end %>
+      <%= post_title %>
+      <%= post_details %>
+      <%= post_summary %>
+      <%= hr_tag %>
+      <%= post_contents %>
+
+      <% @post.tags.each do |tag| %>
+        <%= link_to tag.name, '/tag/' + tag.name, class: 'btn btn-primary'  %>
+      <% end %>
       <% if @post.author == current_author %>
-        <hr class="my-4">
+        <%= (@post.tags.count == 0 ? "" : hr_tag) %>
         <%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-info'  %>
         <%= link_to 'Delete Post', @post, method: :delete, class: 'btn btn-danger'  %>
       <% end %>

@@ -1,0 +1,18 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Posts By Writer
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <% Author.all.each do |author| %>
+            <% unless author.posts.count == 0 %>
+                <%= link_to '/author/' + author.name, class: 'dropdown-item' do %>
+                    <%= author.name %> &nbsp;
+                    <span class="badge badge-info">
+                        <%= author.posts.size %>
+                        <%= (author.posts.size == 1 ? " post" : " posts") %>
+                    </span>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</li>

@@ -1,19 +1,36 @@
+<%
+  # HTML Entities
+  listing_title = '<h3><strong>Post List</strong></h3>'.html_safe
+  sorting_label = '<label for="sortingSelect">Sort the posts by</label>'.html_safe
+  sorting_options = grouped_options_for_select(@sorting_method_names, selected: session[:sorting_method])
+
+  # Ruby HTML Generators
+  post_listing_link = Proc.new do |post| 
+    "<a class=\"list-group-item list-group-item-action\" data-target=\"card#{post.id}\">#{post.title}</a>".html_safe
+  end 
+%>
+
 <div class="col-12 col-sm-3 offset-sm-1">
   <div class="jumbotron jumbotron-fluid post-listing-jumbotron sticky-top">
     <div class="container">
-      <h3><strong>Post List</strong></h3>
-      <label for="sortingSelect">Sort the posts by</label>
+      
+      <%= listing_title %>
+
+      <%= sorting_label %>
       <%= form_for('sorting_method', url: :sort_posts) do |f| %>
         <%= f.select :method, {}, {}, { class: 'form-control', onchange: 'this.form.submit();' } do %>
-          <%= grouped_options_for_select(@sorting_method_names, selected: session[:sorting_method]) %>
+          <%= sorting_options  %>
         <% end %>
       <% end %>
+
       <br>
+
       <ul class="list-group list-group-flush">
         <% posts.each do |post| %>
-          <a class="list-group-item list-group-item-action" data-target="card<%= post.id %>"><%= post.title %></a>
+          <%= post_listing_link.call(post) %>
         <% end %>
       </ul>
+      
     </div>
   </div>
   <br>

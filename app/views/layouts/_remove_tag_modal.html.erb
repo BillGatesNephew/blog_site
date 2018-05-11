@@ -1,13 +1,17 @@
-<div class="modal fade" id="editTagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div id="modalBody" class="modal-body">
-        <% if @tags.count == 0 %>
-          <h2 class="text-center">No Tags Available</h2>
-        <% else %>
-          <%= render "layouts/edit_tags_accordion", { tags: @tags }%>
-        <% end %>
+<%
+  # HTML Entities
+  no_tags_message = '<h2 class="text-center">No Tags Available</h2>'.html_safe  
+  modal_body_message = @tags.count == 0 ? no_tags_message : render("layouts/edit_tags_accordion", { tags: @tags })
+  modal_body = "
+    <div class=\"modal-dialog\" role=\"document\">
+      <div class=\"modal-content\">
+        <div id=\"modalBody\" class=\"modal-body\">
+          #{modal_body_message}
+        </div>
       </div>
-    </div>
-  </div>
+    </div>".html_safe
+%>
+
+<div class="modal fade" id="editTagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <%= modal_body %>
 </div>
