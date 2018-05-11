@@ -1,10 +1,9 @@
 <%
   creation_time = @post.created_at.strftime("%A %B %e, %Y")
-  author = @post.author.name 
   contents = HTMLEntities.new.decode(@post.content).html_safe
   # HTML Entities
   post_title = "<h1 class=\"display-4\">#{@post.title}</h1>".html_safe
-  post_details = "<p class=\"font-weight-light\">Written by #{author} on #{creation_time}</p>".html_safe
+  post_details = "<p class=\"font-weight-light\">Written by #{@post.author.name} on #{creation_time}</p>".html_safe
   post_summary = "<p class=\"lead\">#{@post.summary}</p>".html_safe
   post_contents = "<p>#{ contents }</p>".html_safe
   hr_tag = '<hr class="my-4">'.html_safe
@@ -27,6 +26,7 @@
       <% @post.tags.each do |tag| %>
         <%= tag_link.call(tag) %>
       <% end %>
+
       <% if @post.author == current_author %>
         <%= (@post.tags.count == 0 ? "" : hr_tag) %>
         <%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-info'  %>
