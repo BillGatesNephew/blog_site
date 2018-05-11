@@ -10,7 +10,7 @@
   
   # Ruby Generated HTML
   tag_link = Proc.new do |tag|
-    link_to(tag.name, '/tag/' + tag.name, class:'btn btn-primary')
+    link_to(tag.name, '/tag/' + tag.name, class:'btn btn-primary show-post-tag-buttons')
   end 
 %>
 
@@ -29,10 +29,15 @@
         <%= tag_link.call(tag) %>
       <% end %>
 
+      <br>
+
+      <%= hr_tag %>
+      <%= link_to 'Back', 'javascript:history.back()', class: 'btn btn-outline-info' %>
+
       <% if @post.author == current_author %>
-        <%= (@post.tags.count == 0 ? "" : hr_tag) %>
-        <%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-info'  %>
-        <%= link_to 'Delete Post', @post, method: :delete, class: 'btn btn-danger'  %>
+        <%= hr_tag %>
+        <%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-info edit-post-btn' %>
+        <%= link_to 'Delete Post', @post, method: :delete, class: 'btn btn-danger edit-post-btn' %>
       <% end %>
     </div>
   </div>
