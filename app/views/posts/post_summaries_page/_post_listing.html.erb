@@ -1,6 +1,10 @@
 <%
   # HTML Entities
-  listing_title = '<h3><strong>Post List</strong></h3>'.html_safe
+  listing_title = '
+    <div class="col-9">
+      <h3><strong>Post List</strong></h3>
+    </div>'.html_safe
+  collapse_button = '<button id="collapseBtn" class="btn btn-outline-info btn-sm">&#x25BC;</button>'.html_safe
   sorting_label = '<label for="sortingSelect">Sort the posts by</label>'.html_safe
   sorting_options = grouped_options_for_select(@sorting_method_names, selected: session[:sorting_method])
 
@@ -11,10 +15,18 @@
 %>
 
 <div class="col-12 col-sm-3 offset-sm-1">
-  <div class="jumbotron jumbotron-fluid post-listing-jumbotron sticky-top">
+  <div id="postListingJumbotron" class="jumbotron jumbotron-fluid post-listing-jumbotron sticky-top <%= session[:list_collapsed] ? 'collapsed' : '' %>">
     <div class="container">
       
-      <%= listing_title %>
+      <div class="row">
+        <%= listing_title %>
+        <div class="col-3">
+          <%= form_for('collapse_state', url: :save_collapse_state, remote: true) do |f| %>
+            <%= collapse_button %>
+            <%= f.hidden_field(:list_collapsed, {value: session[:list_collapsed], onchange: 'this.form.submit();'}) %>
+          <% end %>
+        </div>
+      </div>
 
       <%= sorting_label %>
       <%= form_for('sorting_method', url: :sort_posts) do |f| %>
@@ -25,7 +37,7 @@
 
       <br>
 
-      <ul class="list-group list-group-flush">
+      <ul id="postList" class="list-group list-group-flush">
         <% posts.each do |post| %>
           <%= post_listing_link.call(post) %>
         <% end %>

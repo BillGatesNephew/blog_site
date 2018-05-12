@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   put '/tags/:id', to: 'tags#update'
   delete '/tags/:id', to: 'tags#delete'
 
+  post '/save_collapse_state/', to: 'posts#save_collapse_state', as: :save_collapse_state
   post '/sort_posts/', to: 'posts#sort_posts', as: :sort_posts
 
   root to: "posts#index"

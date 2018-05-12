@@ -3,8 +3,12 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_author!, only: [:new, :edit, :create, :update]
 
-  
-  # GET /sort_posts/
+  # POST /save_collapse_state/
+  def save_collapse_state
+    session[:list_collapsed] = collapse_param["list_collapsed"] == "true" ? true : false 
+  end 
+
+  # POST /sort_posts/
   def sort_posts
     session[:sorting_method] = sort_param["method"]
     redirect_back fallback_location: :root
@@ -150,7 +154,7 @@ class PostsController < ApplicationController
         @posts = method_hash.has_key?(method) ? method_hash[method].call(@posts) : @posts
       end 
     end 
-    
+
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
@@ -159,6 +163,10 @@ class PostsController < ApplicationController
     # White list the parameters used for sorting
     def sort_param
       params.require(:sorting_method).permit(:method)
+    end 
+
+    def collapse_param
+      params.require(:collapse_state).permit(:list_collapsed)
     end 
 
     # Never trust parameters from the scary internet, only allow the white list through.
