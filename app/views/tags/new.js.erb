@@ -2,10 +2,11 @@
     let successMessage = "Tag successfully created.";
     let errorMessage = "Tag not created - Please fix the following:";
     let errors = <%= raw @errors %>;
+    let tagName = "<%= @tag.name %>";
     let $modalBody = document.getElementById("modalBody");
 
     function removeExistingAlert() {
-        $existingAlert = document.getElementById("tagAlert");
+        $existingAlert = document.getElementById("updateTagAlert");
         if($existingAlert !== null) $existingAlert.remove();
     }
 
@@ -13,7 +14,7 @@
         removeExistingAlert();
         const $alert = document.createElement("div");
         $alert.setAttribute("class", "alert alert-dismissible fade show " + alertClass);
-        $alert.setAttribute("id", "tagAlert");
+        $alert.setAttribute("id", "updateTagAlert");
         const $textStrong = document.createElement("strong"); 
         const $text = document.createTextNode(text);
         $textStrong.appendChild($text);
@@ -37,6 +38,7 @@
     function tagCreated() {
         const $successAlert = createAlert(successMessage, "alert-success");
         $modalBody.prepend($successAlert);
+        addTagToDropdown(tagName);
     }
 
     function tagNotCreated(errors) {

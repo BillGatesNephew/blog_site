@@ -132,6 +132,7 @@ body::-webkit-scrollbar {
     overflow-y: hidden;
     height: 84vh !important;
     transition: height 500ms;
+    min-height: 128.37px;
 }
 
 .post-listing-jumbotron.collapsed {

@@ -1,21 +1,10 @@
 <%
   # HTML Entities
   title_header = "<h2>#{ title }</h2>".html_safe
-  post_preview_container = '
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card">
-          <h5 class="card-header">Post Preview</h5>
-          <div class="card-body">
-            <div id="contentPreview">The post will appear here...</div>
-          </div>
-        </div>
-      </div>
-    </div>'.html_safe
   post_tag_input = '
     <div class="row">
       <div class="col-xs-12 col-sm-4 dropdown">
-        <label for="tagInput">Post Tags</label>
+        <label for="tagInput">Post Tags (<em>Optional</em>)</label>
         <input id="tagInput" type="text" class="form-control" placeholder="Tag Name" data-toggle="dropdown">
         <span class="dropdown-menu" id="dropdownMenu">
           <div class="dropdown-divider"></div>
@@ -26,18 +15,41 @@
         <div id="tags"></div>
       </div>
     </div>'.html_safe
+  # Ruby HTML Generators
+  post_preview_container = Proc.new do |post|
+    preview_content = post == nil || post.content == nil ? 'The post will appear here...' : post.content
+    "<div class=\"row\">
+      <div class=\"col-sm-12\">
+        <div class=\"card\">
+          <h5 class=\"card-header\">Post Preview</h5>
+          <div class=\"card-body\">
+            <div id=\"contentPreview\">#{HTMLEntities.new.decode(preview_content).html_safe}</div>
+          </div>
+        </div>
+      </div>
+    </div>".html_safe
+  end 
 %>
 
 <%= form_with(model: post, local: true) do |form| %>
 
   <% if post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-      <ul>
-        <% post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 offset-sm-1">
+        <div class="alert alert-danger alert-dismissible fade show">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="alert-heading">Please fix the following <%= pluralize(post.errors.count, "error") %>:</h4>
+          <ul>
+            <% post.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+
+        </div>
+
+      </div>
     </div>
   <% end %>
 
@@ -65,7 +77,7 @@
         <%= form.trix_editor :content, id: :post_content, placeholder: 'Write your post\'s stuff here' %>
       </div>
 
-      <%= post_preview_container %>
+      <%= post_preview_container.call(post) %>
       
       <br>
 
@@ -86,6 +98,7 @@
 <script>
   const initialTags = <%= raw @initial_tags %>;
   const currentTags = <%= raw @current_tags %>;
+  let dropdownTags = [];
 </script>
 
 <%= javascript_include_tag 'post_tags' %>

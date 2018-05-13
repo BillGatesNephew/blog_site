@@ -1,3 +1,4 @@
+let addTagToDropdown;
 $(document).ready(function() {
     const badgeColors = [
         "badge-primary", "badge-info", "badge-success", "badge-dark", "badge-light"
@@ -10,7 +11,7 @@ $(document).ready(function() {
     let dropdownTags = [];
     let rowTags = [];
 
-    function addTagToDropdown(tagName) {
+    addTagToDropdown = function(tagName) {
         const $tagLink = createElement("a", tagName, "dropdown-item");
         $tagLink.onclick = () => {
             if(!rowTags.includes(tagName)) {
