@@ -59,6 +59,7 @@ $(document).ready(function() {
 
     initialTags.forEach(addTagToDropdown);
     currentTags.forEach(addTagToRow);
+    updateTagInputValue();
 
 
     document.addEventListener("trix-change", function(event) {
