@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
         # Checks if current author has author creation priviledges or not 
         # TODO: Add column for admin privileges to authors table 
         def current_author_is_admin?
-            current_author != nil && current_author.id == 1
+            Author.all.count < 1 || (current_author != nil && current_author.id == 1)
         end 
 
         # Ensures that the author has admin privileges for the page.
