@@ -49,6 +49,9 @@ gem 'bootstrap', '~> 4.0.0'
 # Material UI Styles for Bootstrap
 gem 'material-sass', '~> 4.0.0.beta2'
 
+# Material UI Icons
+gem 'material_icons'
+
 # Trix Rich Text Editor
 gem 'trix'
 
