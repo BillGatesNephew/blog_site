@@ -82,15 +82,12 @@ body::-webkit-scrollbar {
     left: 0;
     right: 0;
     width: 100%;
-    height: 60px;
+    height: 50px;
     background-color: $duke-blue;
     color: $text-white;
-    padding-top:15px;
+    padding-top:10px;
 }
 
-@media (max-width: 570px) {
-    .footer { height: 100px; }
-}
 
 .glowing-border {
     box-shadow: 0 1px 2px rgba(0,0,0,0.15);
